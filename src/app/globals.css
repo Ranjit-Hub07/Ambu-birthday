@@ -282,13 +282,58 @@ body {
 .delay-700 { animation-delay: 0.7s; }
 .delay-1000 { animation-delay: 1s; }
 
-/* ── Transition helpers ── */
+/* ── Transition & Scroll-Hover helpers (Desktop + Mobile) ── */
 .transition-transform-200 { transition: transform 0.2s ease; }
 .hover-scale-102:hover    { transform: scale(1.02); }
 .hover-scale-103:hover    { transform: scale(1.03); }
 .hover-scale-104:hover    { transform: scale(1.04); }
 .hover-rotate-0:hover     { transform: rotate(0deg); }
 .active-scale-98:active   { transform: scale(0.98); }
+
+.scroll-reveal-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.scroll-reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-hover-card {
+  opacity: 0;
+  transform: translateY(20px) scale(0.97) rotate(var(--card-rotate, 0deg));
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease,
+    background 0.3s ease;
+  will-change: transform, opacity;
+}
+.scroll-hover-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(var(--card-rotate, 0deg));
+}
+.scroll-hover-card.is-in-focus,
+.scroll-hover-card:hover {
+  opacity: 1;
+  transform: translateY(-6px) scale(1.02) rotate(0deg);
+  box-shadow: 0 18px 38px -8px rgba(200, 162, 255, 0.5), 0 0 0 1px rgba(255, 182, 217, 0.55) !important;
+}
+.scroll-hover-card:active {
+  transform: translateY(-2px) scale(0.98) rotate(0deg);
+}
+
+.touch-hover-btn {
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+}
+.touch-hover-btn:hover {
+  transform: scale(1.03);
+}
+.touch-hover-btn:active {
+  transform: scale(0.96);
+}
 
 /* Rotate utilities */
 .-rotate-1 { transform: rotate(-1deg); }

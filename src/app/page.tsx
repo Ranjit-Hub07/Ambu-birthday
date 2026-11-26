@@ -144,6 +144,7 @@ function OpeningSection({ onStartMusic }: { onStartMusic: () => void }) {
         {/* CTA Button */}
         <button
           onClick={scrollToReveal}
+          className="touch-hover-btn"
           style={{
             padding: "0.9rem 1.6rem", borderRadius: 9999,
             background: "linear-gradient(to right, #ffb6d9, #c8a2ff)",
@@ -153,12 +154,7 @@ function OpeningSection({ onStartMusic }: { onStartMusic: () => void }) {
             boxShadow: "0 10px 28px -6px rgba(200,162,255,0.45)",
             display: "flex", alignItems: "center", gap: "0.5rem",
             touchAction: "manipulation",
-            transition: "transform 0.2s",
           }}
-          onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.03)")}
-          onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
-          onMouseDown={e => (e.currentTarget.style.transform = "scale(0.98)")}
-          onMouseUp={e => (e.currentTarget.style.transform = "scale(1.03)")}
         >
           <span>Open Your Surprise 💌</span>
         </button>
@@ -187,8 +183,8 @@ function BirthdayRevealSection() {
   }, []);
 
   return (
-    <section id="birthday-reveal" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 0.25rem", width: "100%" }}>
-      <div style={{
+    <section id="birthday-reveal" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 0.25rem", width: "100%" }}>
+      <div className="scroll-hover-card" style={{
         position: "relative", width: "100%", maxWidth: 440,
         borderRadius: "1rem",
         background: "rgba(255,255,255,0.82)", backdropFilter: "blur(20px)",
@@ -266,7 +262,7 @@ const memories = [
 
 function MemoriesSection() {
   return (
-    <section id="our-memories" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+    <section id="our-memories" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <span style={{
           display: "inline-block", padding: "0.25rem 1rem", borderRadius: 9999,
@@ -278,19 +274,15 @@ function MemoriesSection() {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem", width: "100%", maxWidth: 440 }}>
         {memories.map((m, i) => (
-          <div key={i} style={{
+          <div key={i} className="scroll-hover-card" style={{
             position: "relative",
             background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
             padding: "0.85rem 0.85rem 1.25rem",
             borderRadius: "0.85rem",
             boxShadow: "0 10px 28px -6px rgba(200,162,255,0.28)",
-            transform: `rotate(${m.rotate})`,
-            transition: "transform 0.3s",
-          }}
-            onMouseEnter={e => (e.currentTarget.style.transform = "rotate(0deg)")}
-            onMouseLeave={e => (e.currentTarget.style.transform = `rotate(${m.rotate})`)}
-          >
+            "--card-rotate": m.rotate,
+          } as React.CSSProperties}>
             {/* Tape strip */}
             <div style={{
               position: "absolute", top: -10, left: "50%", transform: `translateX(-50%) rotate(${m.tapeRot})`,
@@ -312,7 +304,7 @@ function MemoriesSection() {
 function HeartLetterSection() {
   const [open, setOpen] = useState(false);
   return (
-    <section id="heart-letter" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+    <section id="heart-letter" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">A Letter From My Heart 💌</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap the envelope to open</p>
@@ -320,6 +312,7 @@ function HeartLetterSection() {
       <div style={{ width: "100%", maxWidth: 440 }}>
         <button
           onClick={() => setOpen(!open)}
+          className="scroll-hover-card"
           style={{
             width: "100%", borderRadius: "0.85rem",
             backgroundColor: "#ffdff5", padding: "1.25rem 1rem",
@@ -327,10 +320,7 @@ function HeartLetterSection() {
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.75rem",
             border: "none", cursor: "pointer",
             touchAction: "manipulation",
-            transition: "transform 0.2s",
           }}
-          onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.01)")}
-          onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
         >
           <div style={{ width: 56, height: 56, borderRadius: 9999, backgroundColor: "#ffb6d9", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 6px rgba(0,0,0,0.07)" }}>
             <span className="material-symbols-outlined text-on-primary-fixed" style={{ fontSize: 28, fontVariationSettings: "'FILL' 1" }}>favorite</span>
@@ -380,7 +370,7 @@ function TenThingsSection() {
   const [revealed, setRevealed] = useState<boolean[]>(Array(10).fill(false));
   const toggle = (i: number) => setRevealed(prev => prev.map((v, idx) => idx === i ? !v : v));
   return (
-    <section id="ten-things" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+    <section id="ten-things" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">10 Things I Love About You 🌸</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap each card to reveal a reason</p>
@@ -390,6 +380,7 @@ function TenThingsSection() {
           <button
             key={i}
             onClick={() => toggle(i)}
+            className="scroll-hover-card"
             style={{
               width: "100%", minHeight: 104, padding: "0.75rem 0.45rem",
               borderRadius: "0.75rem",
@@ -400,7 +391,6 @@ function TenThingsSection() {
               display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center",
               border: "none", cursor: "pointer",
               touchAction: "manipulation",
-              transition: "transform 0.2s, background 0.3s",
             }}
           >
             {revealed[i] ? (
@@ -423,7 +413,7 @@ function SecretSurpriseSection() {
   const [opened, setOpened] = useState(false);
   const open = () => { setOpened(true); launchConfetti(); };
   return (
-    <section id="secret-surprise" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+    <section id="secret-surprise" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">A Secret Surprise 🎁</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap the glowing gift box</p>
@@ -431,7 +421,7 @@ function SecretSurpriseSection() {
       {!opened ? (
         <button
           onClick={open}
-          className="animate-bounce"
+          className="animate-bounce touch-hover-btn"
           style={{
             width: 140, height: 140, borderRadius: "0.85rem",
             background: "linear-gradient(to bottom right, #ffb6d9, #c8a2ff)",
@@ -439,7 +429,6 @@ function SecretSurpriseSection() {
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.35rem",
             border: "none", cursor: "pointer",
             touchAction: "manipulation",
-            transition: "transform 0.2s",
           }}
         >
           <span className="material-symbols-outlined text-on-primary-fixed" style={{ fontSize: 42, fontVariationSettings: "'FILL' 1" }}>featured_seasonal_and_gifts</span>
@@ -469,8 +458,8 @@ function SecretSurpriseSection() {
 // ── Final Message section ──────────────────────────────────────────────────
 function FinalMessageSection() {
   return (
-    <section id="final-message" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 0.25rem", marginBottom: "1.5rem", width: "100%" }}>
-      <div style={{
+    <section id="final-message" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 0.25rem", marginBottom: "1.5rem", width: "100%" }}>
+      <div className="scroll-hover-card" style={{
         width: "100%", maxWidth: 440,
         borderRadius: "0.85rem",
         background: "rgba(255,255,255,0.85)", backdropFilter: "blur(20px)",
@@ -494,6 +483,41 @@ function FinalMessageSection() {
 export default function Page() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    const revealEls = document.querySelectorAll(".scroll-reveal-section, .scroll-hover-card");
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    revealEls.forEach((el) => revealObserver.observe(el));
+
+    const cards = document.querySelectorAll(".scroll-hover-card");
+    const focusObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in-focus");
+          } else {
+            entry.target.classList.remove("is-in-focus");
+          }
+        });
+      },
+      { rootMargin: "-28% 0px -28% 0px", threshold: 0.1 }
+    );
+    cards.forEach((el) => focusObserver.observe(el));
+
+    return () => {
+      revealObserver.disconnect();
+      focusObserver.disconnect();
+    };
+  }, []);
 
   const startMusic = () => {
     const audio = audioRef.current;
