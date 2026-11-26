@@ -184,7 +184,7 @@ function BirthdayRevealSection() {
 
   return (
     <section id="birthday-reveal" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 0.25rem", width: "100%" }}>
-      <div className="scroll-hover-card slide-from-left" style={{
+      <div className="scroll-hover-card" style={{
         position: "relative", width: "100%", maxWidth: 440,
         borderRadius: "1rem",
         background: "rgba(255,255,255,0.82)", backdropFilter: "blur(20px)",
@@ -274,7 +274,7 @@ function MemoriesSection() {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem", width: "100%", maxWidth: 440 }}>
         {memories.map((m, i) => (
-          <div key={i} className={`scroll-hover-card ${i % 2 === 0 ? "slide-from-left" : "slide-from-right"}`} style={{
+          <div key={i} className="scroll-hover-card" style={{
             position: "relative",
             background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
@@ -312,7 +312,7 @@ function HeartLetterSection() {
       <div style={{ width: "100%", maxWidth: 440 }}>
         <button
           onClick={() => setOpen(!open)}
-          className="scroll-hover-card slide-from-right"
+          className="scroll-hover-card"
           style={{
             width: "100%", borderRadius: "0.85rem",
             backgroundColor: "#ffdff5", padding: "1.25rem 1rem",
@@ -380,7 +380,7 @@ function TenThingsSection() {
           <button
             key={i}
             onClick={() => toggle(i)}
-            className={`scroll-hover-card ${i % 2 === 0 ? "slide-from-left" : "slide-from-right"}`}
+            className="scroll-hover-card"
             style={{
               width: "100%", minHeight: 104, padding: "0.75rem 0.45rem",
               borderRadius: "0.75rem",
@@ -459,7 +459,7 @@ function SecretSurpriseSection() {
 function FinalMessageSection() {
   return (
     <section id="final-message" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 0.25rem", marginBottom: "1.5rem", width: "100%" }}>
-      <div className="scroll-hover-card slide-from-left" style={{
+      <div className="scroll-hover-card" style={{
         width: "100%", maxWidth: 440,
         borderRadius: "0.85rem",
         background: "rgba(255,255,255,0.85)", backdropFilter: "blur(20px)",
@@ -496,7 +496,7 @@ export default function Page() {
           }
         });
       },
-      { rootMargin: "0px 0px -30px 0px", threshold: 0.05 }
+      { rootMargin: "0px 0px -20px 0px", threshold: 0.01 }
     );
     revealEls.forEach((el) => revealObserver.observe(el));
 
