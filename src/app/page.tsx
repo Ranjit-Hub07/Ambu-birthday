@@ -26,49 +26,13 @@ export function launchConfetti() {
 }
 
 // ── Music button ───────────────────────────────────────────────────────────
-function MusicButton() {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    const audio = new Audio("/music.mp3");
-    audio.loop = true;
-    audio.volume = 0.7;
-    audioRef.current = audio;
-
-    const onPlay = () => setPlaying(true);
-    const onPause = () => setPlaying(false);
-    const onEnded = () => setPlaying(false);
-
-    audio.addEventListener("play", onPlay);
-    audio.addEventListener("pause", onPause);
-    audio.addEventListener("ended", onEnded);
-
-    const handleStartMusic = () => {
-      audio.play().catch(() => {});
-    };
-    window.addEventListener("start-music", handleStartMusic);
-
-    return () => {
-      window.removeEventListener("start-music", handleStartMusic);
-      audio.removeEventListener("play", onPlay);
-      audio.removeEventListener("pause", onPause);
-      audio.removeEventListener("ended", onEnded);
-      audio.pause();
-      audio.src = "";
-    };
-  }, []);
-
-  const toggle = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) {
-      audio.pause();
-    } else {
-      audio.play().catch(() => {});
-    }
-  };
-
+function MusicButton({
+  playing,
+  onToggle,
+}: {
+  playing: boolean;
+  onToggle: () => void;
+}) {
   return (
     <div
       style={{
@@ -79,7 +43,7 @@ function MusicButton() {
       }}
     >
       <button
-        onClick={toggle}
+        onClick={onToggle}
         aria-label="Toggle background music"
         style={{
           minHeight: 38,
@@ -137,10 +101,10 @@ function AmbientParticles() {
 }
 
 // ── Opening section ────────────────────────────────────────────────────────
-function OpeningSection() {
+function OpeningSection({ onStartMusic }: { onStartMusic: () => void }) {
   const scrollToReveal = () => {
     launchConfetti();
-    window.dispatchEvent(new CustomEvent("start-music"));
+    onStartMusic();
     document.getElementById("birthday-reveal")?.scrollIntoView({ behavior: "smooth" });
   };
   return (
@@ -528,6 +492,27 @@ function FinalMessageSection() {
 
 // ── Root Page ──────────────────────────────────────────────────────────────
 export default function Page() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const startMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.7;
+    audio.play().catch(() => {});
+  };
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.7;
+    if (!audio.paused) {
+      audio.pause();
+    } else {
+      audio.play().catch(() => {});
+    }
+  };
+
   return (
     <div
       style={{
@@ -539,11 +524,22 @@ export default function Page() {
         width: "100%",
       }}
     >
+      <audio
+        ref={audioRef}
+        src="/music.mp3"
+        loop
+        preload="auto"
+        playsInline
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+      />
+
       {/* Confetti layer */}
       <div id="confetti-container" style={{ pointerEvents: "none" }} />
 
       {/* Music button */}
-      <MusicButton />
+      <MusicButton playing={playing} onToggle={toggleMusic} />
 
       {/* Main content */}
       <main
@@ -557,7 +553,7 @@ export default function Page() {
         }}
         className="pt-safe pb-safe"
       >
-        <OpeningSection />
+        <OpeningSection onStartMusic={startMusic} />
         <BirthdayRevealSection />
         <MemoriesSection />
         <HeartLetterSection />
