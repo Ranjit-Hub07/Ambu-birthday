@@ -263,7 +263,7 @@ const memories = [
 function MemoriesSection() {
   return (
     <section id="our-memories" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
-      <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+      <div className="scroll-hover-card" style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <span style={{
           display: "inline-block", padding: "0.25rem 1rem", borderRadius: 9999,
           backgroundColor: "#ffd8e8", color: "#370925",
@@ -304,8 +304,8 @@ function MemoriesSection() {
 function HeartLetterSection() {
   const [open, setOpen] = useState(false);
   return (
-    <section id="heart-letter" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
-      <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+    <section id="heart-letter" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+      <div className="scroll-hover-card" style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">A Letter From My Heart 💌</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap the envelope to open</p>
       </div>
@@ -371,7 +371,7 @@ function TenThingsSection() {
   const toggle = (i: number) => setRevealed(prev => prev.map((v, idx) => idx === i ? !v : v));
   return (
     <section id="ten-things" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
-      <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+      <div className="scroll-hover-card" style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">10 Things I Love About You 🌸</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap each card to reveal a reason</p>
       </div>
@@ -391,7 +391,8 @@ function TenThingsSection() {
               display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center",
               border: "none", cursor: "pointer",
               touchAction: "manipulation",
-            }}
+              "--stagger-delay": `${(i % 2) * 160}ms`,
+            } as React.CSSProperties}
           >
             {revealed[i] ? (
               <span className="font-body-sm text-on-primary-fixed" style={{ wordBreak: "break-word", lineHeight: 1.35 }}>{r}</span>
@@ -413,15 +414,15 @@ function SecretSurpriseSection() {
   const [opened, setOpened] = useState(false);
   const open = () => { setOpened(true); launchConfetti(); };
   return (
-    <section id="secret-surprise" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
-      <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+    <section id="secret-surprise" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+      <div className="scroll-hover-card" style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">A Secret Surprise 🎁</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap the glowing gift box</p>
       </div>
       {!opened ? (
         <button
           onClick={open}
-          className="animate-bounce touch-hover-btn"
+          className="scroll-hover-card touch-hover-btn"
           style={{
             width: 140, height: 140, borderRadius: "0.85rem",
             background: "linear-gradient(to bottom right, #ffb6d9, #c8a2ff)",
@@ -496,7 +497,7 @@ export default function Page() {
           }
         });
       },
-      { rootMargin: "0px 0px -20px 0px", threshold: 0.01 }
+      { rootMargin: "0px 0px -15% 0px", threshold: 0.08 }
     );
     revealEls.forEach((el) => revealObserver.observe(el));
 
