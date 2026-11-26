@@ -262,7 +262,7 @@ const memories = [
 
 function MemoriesSection() {
   return (
-    <section id="our-memories" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+    <section id="our-memories" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <span style={{
           display: "inline-block", padding: "0.25rem 1rem", borderRadius: 9999,
@@ -370,7 +370,7 @@ function TenThingsSection() {
   const [revealed, setRevealed] = useState<boolean[]>(Array(10).fill(false));
   const toggle = (i: number) => setRevealed(prev => prev.map((v, idx) => idx === i ? !v : v));
   return (
-    <section id="ten-things" className="scroll-reveal-section" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
+    <section id="ten-things" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "2rem 0.25rem", width: "100%" }}>
       <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
         <h2 className="font-headline-lg text-on-surface">10 Things I Love About You 🌸</h2>
         <p className="font-body-sm text-on-surface-variant" style={{ marginTop: "0.25rem" }}>Tap each card to reveal a reason</p>
@@ -491,10 +491,12 @@ export default function Page() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+          } else {
+            entry.target.classList.remove("is-visible");
           }
         });
       },
-      { threshold: 0.1 }
+      { rootMargin: "0px 0px -30px 0px", threshold: 0.05 }
     );
     revealEls.forEach((el) => revealObserver.observe(el));
 
@@ -509,7 +511,7 @@ export default function Page() {
           }
         });
       },
-      { rootMargin: "-28% 0px -28% 0px", threshold: 0.1 }
+      { rootMargin: "-25% 0px -25% 0px", threshold: 0.05 }
     );
     cards.forEach((el) => focusObserver.observe(el));
 
